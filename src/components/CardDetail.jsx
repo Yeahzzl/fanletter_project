@@ -9,7 +9,10 @@ import { styled } from "styled-components";
 function CardDetail({ navigate, cardList, setCardList }) {
   const { id } = useParams();
   const [isEdit, setIsEdit] = useState(false);
-  const [editText, setEditText] = useState("");
+  const clickData = cardList.filter((item) => {
+    return item.id === id;
+  });
+  const [editText, setEditText] = useState(clickData[0].content);
 
   // 삭제 기능
   const deleteBtn = (id) => {
@@ -20,31 +23,40 @@ function CardDetail({ navigate, cardList, setCardList }) {
       const setDelete = cardList.filter((item) => {
         return item.id !== id;
       });
+      // console.log(setDelete);
       setCardList(setDelete);
+      navigate("/");
     } else {
       return;
     }
-    // 삭제 확인 후 확인 메시지 띄우기
-    function showAlert() {
-      alert("삭제되었습니다");
-    }
-    setTimeout(() => showAlert(), 200);
-    // 확인버튼 클릭 후 메인화면으로 이동
-    function moveMain() {
-      navigate("/");
-    }
-    setTimeout(() => moveMain(), 200);
   };
+  //   // 삭제 확인 후 확인 메시지 띄우기
+  //   function showAlert() {
+  //     alert("삭제되었습니다");
+  //   }
+  //   setTimeout(() => showAlert(), 200);
+  //   // 확인버튼 클릭 후 메인화면으로 이동
+  //   function moveMain() {
+  //     navigate("/");
+  //   }
+  //   setTimeout(() => moveMain(), 200);
+  // };
 
   // 수정버튼
   const editBtn = (id) => {
-    setIsEdit(false);
+    // 수정완료 버튼을 눌렀을때 확인창 띄우기
+    const editCheck = window.confirm("수정을 완료하시겠습니까?");
+    if (editCheck) {
+      // console.log(clickData[0].content);
+      if (editText === clickData[0].content) {
+        alert("수정사항이 없습니다");
+        return;
+      } else {
+        setIsEdit(false);
+      }
+    }
   };
 
-  // 수정완료 버튼
-  const editComplete = (id) => {
-    setIsEdit(true);
-  };
   return (
     <>
       <Container>
@@ -73,7 +85,7 @@ function CardDetail({ navigate, cardList, setCardList }) {
                     </Tab>
                   ) : (
                     <>
-                      <Tab onClick={() => editComplete(item.id)}>수정</Tab>
+                      <Tab onClick={() => setIsEdit(true)}>수정</Tab>
                       <Tab onClick={() => deleteBtn(item.id)}>삭제</Tab>
                     </>
                   )}
@@ -81,9 +93,18 @@ function CardDetail({ navigate, cardList, setCardList }) {
 
                 <TextWrapper>
                   {isEdit ? (
-                    <Text value={editText} maxLength={100} />
+                    <Text
+                      // disabled는 input에서 읽기전용으로 바꿔주는 것
+                      // disabled={isEdit === false ? true : false}
+                      onChange={(event) => {
+                        setEditText(event.target.value);
+                        // console.log(event.target.value);
+                      }}
+                      defaultValue={item.content}
+                      maxLength={300}
+                    />
                   ) : (
-                    <Text>{item.content}</Text>
+                    <Text disabled={isEdit === false} value={editText} />
                   )}
                 </TextWrapper>
               </DetailCard>
@@ -179,13 +200,20 @@ const TextWrapper = styled.div`
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
 `;
 
-const Text = styled.p`
-  margin: 20px;
+const Text = styled.textarea`
+  width: 700px;
+  height: 245px;
+  padding: 17px;
   font-size: 18px;
   font-weight: 400;
-  line-height: 30px;
+  color: black;
+  line-height: 25px;
   /* letter-spacing: 2px; */
   text-align: justify;
+  border-radius: 0 40px 0 40px;
+  border: none;
+  resize: none;
+  background: none;
 `;
 
 const Button = styled.button`
@@ -211,4 +239,5 @@ const Button = styled.button`
     transition: all 0.4s;
   }
 `;
+
 export default CardDetail;

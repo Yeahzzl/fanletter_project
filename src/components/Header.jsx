@@ -19,13 +19,7 @@ function Header({ setClick }) {
     <Container>
       <Wrapper $image={bannerImg}></Wrapper>
       <Title>Avengers</Title>
-      <Contents
-        onClick={() =>
-          setClick("토르", "블랙위도우", "캡틴아메리카", "닥터스트레인지")
-        }
-      >
-        Fan Letter
-      </Contents>
+      <Contents onClick={() => setClick("")}>Fan Letter</Contents>
       <TabBox>
         <Tab onClick={() => setClick("토르")}>토르</Tab>
         <Tab onClick={() => setClick("블랙위도우")}>블랙위도우</Tab>
@@ -69,12 +63,13 @@ const Contents = styled.button`
   margin: 30px auto;
   border-style: none;
   background-color: white;
+  cursor: pointer;
   &:hover {
-    color: #ffa704;
+    color: #818181;
     border-style: none;
   }
   &:active {
-    color: #ffa704;
+    color: #818181;
     transform: scale(1.1);
     transition: all 0.3s;
   }

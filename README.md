@@ -6,7 +6,7 @@
 
 ### 과제의 목적
 
-:
+: props-drilling으로 react를
 
 ### 주요기능
 

@@ -4,29 +4,21 @@ import { styled } from "styled-components";
 function CardList({ click, cardList, setCardList, navigate }) {
   return (
     <Container>
-      {click !== ""
-        ? cardList
-            .filter((item) => {
-              //   console.log(item.id, item.writedto === click);
-              return item.writedto === click;
-            })
-            .map((card) => {
-              return (
-                <Card
-                  key={card.id}
-                  onClick={() => {
-                    navigate(`/detail/${card.id}`);
-                    // console.log(card.id);
-                  }}
-                >
-                  {/* <Avatar></Avatar> */}
-                  <Name>{card.nickname}</Name>
-                  <Time>{card.createdat}</Time>
-                  <Text>{card.content}</Text>
-                </Card>
-              );
-            })
-        : cardList.map((card) => {
+      {cardList.length === 0 ? (
+        <Card>
+          <BlankText>
+            🙅🏻‍♀️ 등록된 카드가 없습니다
+            <br />
+            💌 가장 먼저 카드를 카드를 등록해주세요!
+          </BlankText>
+        </Card>
+      ) : click !== "" ? (
+        cardList
+          .filter((item) => {
+            //   console.log(item.id, item.writedto === click);
+            return item.writedto === click;
+          })
+          .map((card) => {
             return (
               <Card
                 key={card.id}
@@ -41,7 +33,25 @@ function CardList({ click, cardList, setCardList, navigate }) {
                 <Text>{card.content}</Text>
               </Card>
             );
-          })}
+          })
+      ) : (
+        cardList.map((card) => {
+          return (
+            <Card
+              key={card.id}
+              onClick={() => {
+                navigate(`/detail/${card.id}`);
+                // console.log(card.id);
+              }}
+            >
+              {/* <Avatar></Avatar> */}
+              <Name>{card.nickname}</Name>
+              <Time>{card.createdat}</Time>
+              <Text>{card.content}</Text>
+            </Card>
+          );
+        })
+      )}
     </Container>
   );
 }
@@ -95,6 +105,12 @@ const Text = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const BlankText = styled.p`
+  font-size: 20px;
+  line-height: 35px;
+  text-align: center;
 `;
 // const Avatar = styled.image`
 //   width: 50px;

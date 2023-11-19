@@ -86,8 +86,8 @@ function Form({ cardList, setCardList }) {
             value={text}
             type="text"
             onChange={textChangeHandler}
-            placeholder="최대 100자 까지 작성할 수 있습니다"
-            maxLength={100}
+            placeholder="최대 300자 까지 작성할 수 있습니다"
+            maxLength={300}
           />
         </Section>
         <Section>
