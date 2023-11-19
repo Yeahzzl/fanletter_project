@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
 import bannerImg from "../assets/avengersImg.png";
 
@@ -19,7 +19,13 @@ function Header({ setClick }) {
     <Container>
       <Wrapper $image={bannerImg}></Wrapper>
       <Title>Avengers</Title>
-      <Contents>Fan Letter</Contents>
+      <Contents
+        onClick={() =>
+          setClick("토르", "블랙위도우", "캡틴아메리카", "닥터스트레인지")
+        }
+      >
+        Fan Letter
+      </Contents>
       <TabBox>
         <Tab onClick={() => setClick("토르")}>토르</Tab>
         <Tab onClick={() => setClick("블랙위도우")}>블랙위도우</Tab>
@@ -32,13 +38,13 @@ function Header({ setClick }) {
 
 const Container = styled.div`
   width: 100%;
-  height: 120vh;
+  height: 100%;
   /* background-color: yellow; */
 `;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 450px;
+  height: 480px;
   background-image: url(${({ $image }) => $image});
   display: flex;
   justify-content: center;
@@ -54,11 +60,24 @@ const Title = styled.h1`
   margin: 100px 0 30px 0;
 `;
 
-const Contents = styled.h3`
+const Contents = styled.button`
   font-size: 40px;
+  font-weight: 600;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  align-items: center;
+  margin: 30px auto;
+  border-style: none;
+  background-color: white;
+  &:hover {
+    color: #ffa704;
+    border-style: none;
+  }
+  &:active {
+    color: #ffa704;
+    transform: scale(1.1);
+    transition: all 0.3s;
+  }
 `;
 
 const TabBox = styled.ul`
@@ -86,17 +105,17 @@ const Tab = styled.button`
   cursor: pointer;
   background-color: white;
   &:hover {
-    background-color: #ffa704;
+    background-color: #282828;
     color: white;
     border-style: none;
   }
   &:active {
-    background-color: #ffa704;
+    background-color: #282828;
     transform: scale(1.1);
     transition: all 0.3s;
   }
   &:focus {
-    background-color: #ffa704;
+    background-color: #282828;
     color: white;
     border-style: none;
   }

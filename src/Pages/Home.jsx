@@ -4,22 +4,20 @@ import Header from "../components/Header";
 import Form from "../components/Form";
 import CardList from "../components/CardList";
 
-function Home() {
+function Home({ cardList, setCardList }) {
   const navigate = useNavigate();
   const [click, setClick] = useState("");
 
   return (
     <div>
       <Header setClick={setClick} />
-      <Form />
-      <CardList click={click} />
-      <button
-        onClick={() => {
-          navigate("/detail");
-        }}
-      >
-        Detail로 이동
-      </button>
+      <Form cardList={cardList} setCardList={setCardList} />
+      <CardList
+        click={click}
+        cardList={cardList}
+        setCardList={setCardList}
+        navigate={navigate}
+      />
     </div>
   );
 }

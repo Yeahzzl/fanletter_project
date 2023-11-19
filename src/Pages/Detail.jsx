@@ -2,19 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import CardDetail from "../components/CardDetail";
 
-function Detail() {
+function Detail({ cardList, setCardList }) {
   const navigate = useNavigate();
-
+  // console.log(id);
   return (
     <div>
-      <CardDetail />
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Home으로 이동
-      </button>
+      <CardDetail
+        navigate={navigate}
+        cardList={cardList}
+        setCardList={setCardList}
+      />
     </div>
   );
 }

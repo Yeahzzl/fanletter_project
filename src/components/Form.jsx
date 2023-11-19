@@ -3,8 +3,7 @@ import { styled } from "styled-components";
 import uuid from "react-uuid";
 import { useState } from "react";
 
-function Form(props) {
-  const [card, setCard] = useState([]);
+function Form({ cardList, setCardList }) {
   const [character, setCharacter] = useState("");
   const [name, setName] = useState("");
   const [text, setText] = useState("");
@@ -37,13 +36,15 @@ function Form(props) {
     // 폼에 입력되는 값
     const addCard = {
       id: uuid(),
-      name,
-      text,
-      writedTo: character,
-      createdAt: new Date(),
+      nickname: name,
+      content: text,
+      writedto: character,
+      createdat: new Date().toISOString(),
+      // toISOString() 찾아보기!!
     };
-    // 폼에 값을 입력하면 리스트에 붙이기
-    setCard([...card, addCard]);
+    // console.log(addCard);
+    // cardList를 펼쳐서 폼에 입력된 카드를 추가해줌
+    setCardList([...cardList, addCard]);
 
     // 등록하기 버튼 클릭시 값 초기화
     setName("");
@@ -60,13 +61,13 @@ function Form(props) {
       <FormBox onSubmit={onSubmit}>
         <Section>
           <Span>캐릭터</Span>
-          <Select onChange={choose}>
+          <Select value={character} onChange={choose}>
             {/* TODO: map으로 바꿔보기 */}
             <option value="">캐릭터를 선택해주세요</option>
-            <option value={character}>토르</option>
-            <option value={character}>블랙위도우</option>
-            <option value={character}>캡틴아메리카</option>
-            <option value={character}>닥터스트레인지</option>
+            <option value="토르">토르</option>
+            <option value="블랙위도우">블랙위도우</option>
+            <option value="캡틴아메리카">캡틴아메리카</option>
+            <option value="닥터스트레인지">닥터스트레인지</option>
           </Select>
         </Section>
         <Section>
@@ -114,7 +115,7 @@ const FormBox = styled.form`
   background-color: #282828;
   margin: 0;
   padding: 50px;
-  border-radius: 50px;
+  border-radius: 0 50px 0 50px;
 `;
 
 const Section = styled.div`
@@ -164,9 +165,15 @@ const Button = styled.button`
   border-radius: 50px;
   border-style: none;
   background-color: white;
+  cursor: pointer;
   &:hover {
     background-color: #ffa704;
     color: white;
+  }
+  &:active {
+    background-color: #ffa704;
+    transform: scale(1.1);
+    transition: all 0.3s;
   }
 `;
 
