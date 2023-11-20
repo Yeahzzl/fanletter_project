@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Form from "../components/Form";
 import CardList from "../components/CardList";
 
-function Home({ cardList, setCardList }) {
+function Home({ click, setClick, cardList, setCardList }) {
   const navigate = useNavigate();
-  const [click, setClick] = useState("");
 
   return (
     <div>
-      <Header setClick={setClick} />
+      <Header click={click} setClick={setClick} />
       <Form cardList={cardList} setCardList={setCardList} />
       <CardList
         click={click}

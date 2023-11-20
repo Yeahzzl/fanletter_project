@@ -6,14 +6,21 @@ import { styled } from "styled-components";
 // id값을 받아서 해당 카드를 Detail화면에 뿌림
 // nickname, content, createdat, writedto
 
+// 삭제 확인 후 확인 메시지 띄우기
+function showAlert() {
+  alert("삭제되었습니다");
+}
 function CardDetail({ navigate, cardList, setCardList }) {
   const { id } = useParams();
   const [isEdit, setIsEdit] = useState(false);
-  const clickData = cardList.filter((item) => {
+  const clickData = cardList.find((item) => {
     return item.id === id;
   });
-  const [editText, setEditText] = useState(clickData[0].content);
-
+  console.log(clickData);
+  const [editText, setEditText] = useState(clickData ? clickData.content : "");
+  function moveMain() {
+    navigate("/");
+  }
   // 삭제 기능
   const deleteBtn = (id) => {
     // 삭제버튼 클릭시 취소, 확인 유효성 검사
@@ -23,24 +30,16 @@ function CardDetail({ navigate, cardList, setCardList }) {
       const setDelete = cardList.filter((item) => {
         return item.id !== id;
       });
-      // console.log(setDelete);
+      console.log(setDelete);
       setCardList(setDelete);
-      navigate("/");
     } else {
       return;
     }
+
+    setTimeout(() => showAlert(), 200);
+    // 확인버튼 클릭 후 메인화면으로 이동
+    setTimeout(() => moveMain(), 200);
   };
-  //   // 삭제 확인 후 확인 메시지 띄우기
-  //   function showAlert() {
-  //     alert("삭제되었습니다");
-  //   }
-  //   setTimeout(() => showAlert(), 200);
-  //   // 확인버튼 클릭 후 메인화면으로 이동
-  //   function moveMain() {
-  //     navigate("/");
-  //   }
-  //   setTimeout(() => moveMain(), 200);
-  // };
 
   // 수정버튼
   const editBtn = (id) => {
@@ -48,7 +47,7 @@ function CardDetail({ navigate, cardList, setCardList }) {
     const editCheck = window.confirm("수정을 완료하시겠습니까?");
     if (editCheck) {
       // console.log(clickData[0].content);
-      if (editText === clickData[0].content) {
+      if (editText === clickData.content) {
         alert("수정사항이 없습니다");
         return;
       } else {

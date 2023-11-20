@@ -1,41 +1,30 @@
 import React from "react";
 import { styled } from "styled-components";
 
+// .map 중복사용했던 부분에서
 function CardList({ click, cardList, setCardList, navigate }) {
+  // console.log(cardList);
+  let filteredList = cardList.filter((item) => {
+    //   console.log(item.id, item.writedto === click);
+    return item.writedto === click;
+  });
+  if (click === "") {
+    filteredList = cardList;
+  }
+  console.log(click);
+
   return (
     <Container>
-      {cardList.length === 0 ? (
+      {filteredList.length === 0 ? (
         <Card>
           <BlankText>
-            🙅🏻‍♀️ 등록된 카드가 없습니다
+            🙅🏻‍♀️ 등록된 카드가 없습니다 🙅🏻‍♀️
             <br />
-            💌 가장 먼저 카드를 카드를 등록해주세요!
+            💌 가장 먼저 카드를 카드를 등록해주세요! 💌
           </BlankText>
         </Card>
-      ) : click !== "" ? (
-        cardList
-          .filter((item) => {
-            //   console.log(item.id, item.writedto === click);
-            return item.writedto === click;
-          })
-          .map((card) => {
-            return (
-              <Card
-                key={card.id}
-                onClick={() => {
-                  navigate(`/detail/${card.id}`);
-                  // console.log(card.id);
-                }}
-              >
-                {/* <Avatar></Avatar> */}
-                <Name>{card.nickname}</Name>
-                <Time>{card.createdat}</Time>
-                <Text>{card.content}</Text>
-              </Card>
-            );
-          })
       ) : (
-        cardList.map((card) => {
+        filteredList.map((card) => {
           return (
             <Card
               key={card.id}
