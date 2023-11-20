@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 
-// .map 중복사용했던 부분에서
+// 삼항연산자 안에 삼항연산자를 사용하면서 .map 중복사용했었는데 filteredList를 따로 빼서 간결하게 수정하였다.
 function CardList({ click, cardList, setCardList, navigate }) {
   // console.log(cardList);
   let filteredList = cardList.filter((item) => {
@@ -44,7 +44,6 @@ function CardList({ click, cardList, setCardList, navigate }) {
     </Container>
   );
 }
-
 const Container = styled.div`
   width: 100vw;
   height: 100%;

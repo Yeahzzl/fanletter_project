@@ -30,7 +30,7 @@ function CardDetail({ navigate, cardList, setCardList }) {
       const setDelete = cardList.filter((item) => {
         return item.id !== id;
       });
-      console.log(setDelete);
+      // console.log(setDelete);
       setCardList(setDelete);
     } else {
       return;
@@ -52,10 +52,17 @@ function CardDetail({ navigate, cardList, setCardList }) {
         return;
       } else {
         setIsEdit(false);
+        const editCardList = cardList.map((editCard) => {
+          if (editCard.id === clickData.id) {
+            return { ...editCard, content: editText };
+          } else {
+            return editCard;
+          }
+        });
+        setCardList(editCardList);
       }
     }
   };
-
   return (
     <>
       <Container>
